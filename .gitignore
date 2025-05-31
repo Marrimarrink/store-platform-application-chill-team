@@ -14,3 +14,7 @@ build/
 # Игнорировать файлы настроек системы
 .DS_Store
 Thumbs.db
+
+# Игнорировать файлы конфигурации
+application.properties
+application.yml

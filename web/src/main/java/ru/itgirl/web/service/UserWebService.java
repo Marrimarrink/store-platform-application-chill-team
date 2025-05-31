@@ -1,4 +1,4 @@
 package ru.itgirl.web.service;
 
-public class UserWebService {
+public interface UserWebService {
 }
