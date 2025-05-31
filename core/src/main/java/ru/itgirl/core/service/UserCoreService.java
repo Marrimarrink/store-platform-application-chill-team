@@ -1,4 +1,4 @@
 package ru.itgirl.core.service;
 
-public class UserCoreService {
+public interface UserCoreService {
 }
