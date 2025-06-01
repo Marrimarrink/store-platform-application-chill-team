@@ -21,6 +21,14 @@ public class ProductCoreServiceImpl implements ProductCoreService {
         return convertEntityToDto(product);
     }
 
+    @Override
+    public ProductDto getProductById(Long id) {
+        log.info("Получение товара по ID: {}", id);
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Товар с ID " + id + " не найден"));
+        return convertEntityToDto(product);
+    }
+
     private ProductDto convertEntityToDto(Product product) {
 
         // !!! Снять комментарии после добавления CompanyDto !!!
