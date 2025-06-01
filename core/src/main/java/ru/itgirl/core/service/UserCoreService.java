@@ -4,4 +4,5 @@ import ru.itgirl.core.dto.UserDto;
 
 public interface UserCoreService {
 
+    UserDto getUserById(Long id);
 }
