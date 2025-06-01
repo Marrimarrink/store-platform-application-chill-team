@@ -8,7 +8,6 @@ import ru.itgirl.core.entity.User;
 import ru.itgirl.core.repository.UserRepository;
 import ru.itgirl.core.service.UserCoreService;
 
-import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -18,6 +17,28 @@ import java.util.Optional;
 public class UserCoreServiceImpl implements UserCoreService {
     private final UserRepository userRepository;
 
+    @Override
+    public UserDto getUserById(Long id) {
+        log.info("Try to find user by id {}", id);
+        Optional<User> user = userRepository.findById(id);
+        if (user.isPresent()) {
+            UserDto userDto = convertEntityToDto(user.get());
+            log.info("User: {}", userDto.toString());
+            return userDto;
+        } else {
+            log.error("User with id {} not found", id);
+            throw new NoSuchElementException("No value present");
+        }
+    }
 
+    private UserDto convertEntityToDto(User user) {
+        return UserDto.builder()
+                .id(user.getId())
+                .email(user.getEmail())
+                .role(user.getRole())
+                .phone(user.getPhone())
+                .isEnabled(user.isEnabled())
+                .build();
+    }
 
 }
