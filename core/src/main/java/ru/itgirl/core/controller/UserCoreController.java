@@ -1,6 +1,7 @@
 package ru.itgirl.core.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,5 +16,10 @@ public class UserCoreController {
     @GetMapping("/user/{id}")
     UserDto getUserById(@PathVariable("id") Long id) {
         return userCoreService.getUserById(id);
+    }
+
+    @DeleteMapping("/user/{id}")
+    void deleteUserById(@PathVariable("id") Long id){
+        userCoreService.deleteUser(id);
     }
 }
