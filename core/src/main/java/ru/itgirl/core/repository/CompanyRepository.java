@@ -1,4 +1,8 @@
 package ru.itgirl.core.repository;
 
-public interface CompanyRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import ru.itgirl.core.entity.Company;
+
+public interface CompanyRepository extends JpaRepository<Company, Long> {
+
 }
