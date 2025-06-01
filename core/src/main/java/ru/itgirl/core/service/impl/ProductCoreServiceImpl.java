@@ -9,6 +9,9 @@ import ru.itgirl.core.entity.Product;
 import ru.itgirl.core.repository.ProductRepository;
 import ru.itgirl.core.service.ProductCoreService;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -37,6 +40,21 @@ public class ProductCoreServiceImpl implements ProductCoreService {
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Товар с ID " + id + " не найден"));
         return convertEntityToDto(product);
+    }
+
+    @Override
+    public void deleteProduct(Long id) {
+        log.info("Удаление товара с ID: {}", id);
+        productRepository.deleteById(id);
+        log.info("Товар с ID {} - удалён", id);
+    }
+
+    @Override
+    public List<ProductDto> getAllProducts() {
+        log.info("Получение всех товаров");
+        List<Product> products = productRepository.findAll();
+        log.info("Найдено {} товаров", products.size());
+        return products.stream().map(this::convertEntityToDto).collect(Collectors.toList());
     }
 
     private ProductDto convertEntityToDto(Product product) {

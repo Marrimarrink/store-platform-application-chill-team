@@ -7,6 +7,8 @@ import ru.itgirl.core.dto.ProductCreateDto;
 import ru.itgirl.core.dto.ProductDto;
 import ru.itgirl.core.service.ProductCoreService;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 public class ProductCoreController {
@@ -20,5 +22,15 @@ public class ProductCoreController {
     @PostMapping("/product/create")
     ProductDto createProduct(@RequestBody @Valid ProductCreateDto productCreateDto) {
         return productCoreService.createProduct(productCreateDto);
+    }
+
+    @DeleteMapping("/product/delete/{id}")
+    void deleteProduct(@PathVariable("id") Long id) {
+        productCoreService.deleteProduct(id);
+    }
+
+    @GetMapping("/products")
+    public List<ProductDto> getAllProducts() {
+        return productCoreService.getAllProducts();
     }
 }
