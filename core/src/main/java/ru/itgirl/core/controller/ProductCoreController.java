@@ -1,9 +1,9 @@
 package ru.itgirl.core.controller;
 
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.*;
-import ru.itgirl.core.dto.ProductCreateDto;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
 import ru.itgirl.core.dto.ProductDto;
 import ru.itgirl.core.service.ProductCoreService;
 
@@ -15,10 +15,5 @@ public class ProductCoreController {
     @GetMapping("/product/{id}")
     public ProductDto getProductById(@PathVariable Long id) {
         return productCoreService.getProductById(id);
-    }
-
-    @PostMapping("/product/create")
-    ProductDto createProduct(@RequestBody @Valid ProductCreateDto productCreateDto) {
-        return productCoreService.createProduct(productCreateDto);
     }
 }
