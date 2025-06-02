@@ -1,5 +1,4 @@
-package ru.itgirl.core.dto;
-
+package ru.itgirl.web.dto;
 
 import lombok.*;
 
