@@ -3,15 +3,15 @@ package ru.itgirl.web.feign;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import ru.itgirl.web.dto.UserDto;
+import ru.itgirl.core.dto.UserDto;
 
 @FeignClient(
         name = "Core",
-        url = "http://localhost:8083"
+        url = "http://localhost:8080"
 )
-public interface CoreServiceFeignClient {
+public interface UserCoreServiceClient {
 
-    @GetMapping("/user/{id}")
+    @GetMapping("/api/v1/users/{id}")
     UserDto getUserById(@PathVariable("id") Long id);
 }
 
