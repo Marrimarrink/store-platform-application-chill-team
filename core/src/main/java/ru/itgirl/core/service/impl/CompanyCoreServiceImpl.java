@@ -9,11 +9,27 @@ import ru.itgirl.core.entity.Company;
 import ru.itgirl.core.repository.CompanyRepository;
 import ru.itgirl.core.service.CompanyCoreService;
 
+import java.util.NoSuchElementException;
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class CompanyCoreServiceImpl implements CompanyCoreService {
     private final CompanyRepository companyRepository;
+
+    @Override
+    public void deleteCompany(Long id) {
+        log.info("Try to delete company with id {}", id);
+        Optional<Company> company = companyRepository.findById(id);
+        if (company.isPresent()) {
+            companyRepository.deleteById(id);
+            log.info("Company with id {} deleted", id);
+        } else {
+            log.error("Company with id {} not found", id);
+            throw new NoSuchElementException("No value present");
+        }
+    }
 
    @Override
     public CompanyDto addCompany(CompanyCreateDto companyCreateDto) {
@@ -30,6 +46,7 @@ public class CompanyCoreServiceImpl implements CompanyCoreService {
                 .name_company(company.getName_company())
                 .build();
     }
+
     private Company convertDtoToEntity(CompanyCreateDto companyCreateDto) {
         return Company.builder()
                 .name_company(companyCreateDto.getName_company())
