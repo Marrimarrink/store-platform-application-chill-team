@@ -40,5 +40,4 @@ public class UserCoreServiceImpl implements UserCoreService {
                 .isEnabled(user.isEnabled())
                 .build();
     }
-
 }
