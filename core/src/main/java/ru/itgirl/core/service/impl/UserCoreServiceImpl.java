@@ -2,6 +2,7 @@ package ru.itgirl.core.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.itgirl.core.dto.UserDto;
 import ru.itgirl.core.entity.User;
@@ -16,6 +17,17 @@ import java.util.Optional;
 @Slf4j
 public class UserCoreServiceImpl implements UserCoreService {
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+
+    @Override
+    public User authenticate(String email, String rawPassword) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new NoSuchElementException("User  not found"));
+        if (!passwordEncoder.matches(rawPassword, user.getPassword())) {
+            throw new IllegalArgumentException("Invalid password");
+        }
+        return user;
+    }
 
     @Override
     public UserDto getUserById(Long id) {
