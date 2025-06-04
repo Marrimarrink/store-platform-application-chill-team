@@ -1,4 +1,20 @@
 package ru.itgirl.web.controller;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
+import ru.itgirl.web.feign.CompanyCoreServiceClient;
+
+@Validated
+@RestController
+@RequiredArgsConstructor
 public class CompanyWebController {
+    private final CompanyCoreServiceClient companyCoreServiceClient;
+
+    @DeleteMapping("/companies/{id}")
+    public void deleteCompany(@PathVariable Long id) {
+        companyCoreServiceClient.deleteCompany(id);
+    }
 }
