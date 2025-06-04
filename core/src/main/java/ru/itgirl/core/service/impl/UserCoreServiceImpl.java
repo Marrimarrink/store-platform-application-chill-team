@@ -8,8 +8,10 @@ import ru.itgirl.core.entity.User;
 import ru.itgirl.core.repository.UserRepository;
 import ru.itgirl.core.service.UserCoreService;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+
 
 @Service
 @RequiredArgsConstructor
@@ -29,6 +31,14 @@ public class UserCoreServiceImpl implements UserCoreService {
             log.error("User with id {} not found", id);
             throw new NoSuchElementException("No value present");
         }
+    }
+
+    @Override
+    public List<UserDto> getAllUsers() {
+        return userRepository.findAll()
+                .stream()
+                .map(this::convertEntityToDto)
+                .toList();
     }
 
     private UserDto convertEntityToDto(User user) {
