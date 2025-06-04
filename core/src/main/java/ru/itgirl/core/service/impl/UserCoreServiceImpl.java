@@ -31,6 +31,25 @@ public class UserCoreServiceImpl implements UserCoreService {
         }
     }
 
+    @Override
+    public UserDto changeUserRole(Long id) {
+        log.info("Try to change user role");
+
+        Optional<User> userOptional = userRepository.findById(id);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            user.setRole("ROLE_MANAGER");
+            User changedUser = userRepository.save(user);
+            UserDto userDto = convertEntityToDto(changedUser);
+
+            log.info("Changed role for user {}", userDto.toString());
+            return userDto;
+        } else {
+            log.error("Role not changed for User with id {} ", id);
+            throw new NoSuchElementException("No value present");
+        }
+    }
+
     private UserDto convertEntityToDto(User user) {
         return UserDto.builder()
                 .id(user.getId())
