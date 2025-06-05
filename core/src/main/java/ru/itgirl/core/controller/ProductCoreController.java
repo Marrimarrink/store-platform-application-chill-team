@@ -10,26 +10,27 @@ import ru.itgirl.core.service.ProductCoreService;
 import java.util.List;
 
 @RestController
+@RequestMapping("/api")
 @RequiredArgsConstructor
 public class ProductCoreController {
     private final ProductCoreService productCoreService;
 
-    @GetMapping("/product/{id}")
+    @GetMapping("/v1/products/{id}")
     public ProductDto getProductById(@PathVariable Long id) {
         return productCoreService.getProductById(id);
     }
 
-    @PostMapping("/product/create")
+    @PostMapping("/v1/products")
     ProductDto createProduct(@RequestBody @Valid ProductCreateDto productCreateDto) {
         return productCoreService.createProduct(productCreateDto);
     }
 
-    @DeleteMapping("/product/delete/{id}")
+    @DeleteMapping("/v1/products/{id}")
     void deleteProduct(@PathVariable("id") Long id) {
         productCoreService.deleteProduct(id);
     }
 
-    @GetMapping("/products")
+    @GetMapping("/v1/products")
     public List<ProductDto> getAllProducts() {
         return productCoreService.getAllProducts();
     }

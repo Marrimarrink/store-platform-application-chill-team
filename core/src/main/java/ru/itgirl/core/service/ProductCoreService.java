@@ -6,7 +6,7 @@ import ru.itgirl.core.dto.ProductDto;
 import java.util.List;
 
 public interface ProductCoreService {
-    ProductDto getProductByName(String name);
+    //ProductDto getProductByName(String name_product);
 
     ProductDto getProductById(Long id);
 
