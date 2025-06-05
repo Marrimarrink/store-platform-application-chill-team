@@ -12,7 +12,7 @@ import ru.itgirl.core.service.UserCoreService;
 public class UserCoreController {
     private final UserCoreService userCoreService;
 
-    @GetMapping("/user/{id}")
+    @GetMapping("/api/v1/users/{id}")
     UserDto getUserById(@PathVariable("id") Long id) {
         return userCoreService.getUserById(id);
     }
