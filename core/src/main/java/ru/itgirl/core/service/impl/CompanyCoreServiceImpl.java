@@ -19,6 +19,14 @@ public class CompanyCoreServiceImpl implements CompanyCoreService {
     private final CompanyRepository companyRepository;
 
     @Override
+    public CompanyDto getCompanyById(Long id) {
+        log.info("Получение компании по ID: {}", id);
+        Company company = companyRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Компании с ID " + id + " не найдены"));
+        return convertEntityToDto(company);
+    }
+
+    @Override
     public List<CompanyDto> getAllCompanies() {
         log.info("Получение всех товаров");
         List<Company> allCompanies = companyRepository.findAll();

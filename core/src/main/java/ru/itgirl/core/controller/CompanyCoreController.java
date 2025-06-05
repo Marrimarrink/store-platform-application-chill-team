@@ -18,4 +18,8 @@ public class CompanyCoreController {
         return companyCoreService.getAllCompanies();
     }
 
+    @GetMapping("/company/{id}")
+    public CompanyDto getCompanyById(@PathVariable long id){
+        return companyCoreService.getCompanyById(id);
+    }
 }

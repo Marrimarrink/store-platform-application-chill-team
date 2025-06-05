@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface CompanyCoreService {
     List<CompanyDto> getAllCompanies();
+
+    CompanyDto getCompanyById(Long id);
 }
