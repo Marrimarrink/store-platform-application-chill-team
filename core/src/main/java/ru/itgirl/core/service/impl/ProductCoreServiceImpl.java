@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import ru.itgirl.core.dto.CompanyDto;
 import ru.itgirl.core.dto.ProductDto;
 import ru.itgirl.core.dto.ProductCreateDto;
+import ru.itgirl.core.dto.ProductUpdateDto;
 import ru.itgirl.core.entity.Company;
 import ru.itgirl.core.entity.Product;
 import ru.itgirl.core.repository.CompanyRepository;
@@ -14,6 +15,7 @@ import ru.itgirl.core.repository.ProductRepository;
 import ru.itgirl.core.service.ProductCoreService;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,15 +25,8 @@ public class ProductCoreServiceImpl implements ProductCoreService {
     private final ProductRepository productRepository;
     private final CompanyRepository companyRepository;
 
-//    @Override
-//    public ProductDto getProductByName(String name_product) {
-//        log.info("Получение товара по названию: {}", name_product);
-//        Product product = productRepository.findByName_product(name_product).orElseThrow();
-//        return convertEntityToDto(product);
-//    }
-
     @Override
-    public ProductDto createProduct(ProductCreateDto productCreateDto) {
+    public ProductDto addProduct(ProductCreateDto productCreateDto) {
         log.info("Создание нового товара: {}", productCreateDto);
 
         Company company = companyRepository.findById(productCreateDto.getCompany_id())
@@ -56,18 +51,43 @@ public class ProductCoreServiceImpl implements ProductCoreService {
     }
 
     @Override
-    public void deleteProduct(Long id) {
-        log.info("Удаление товара с ID: {}", id);
-        productRepository.deleteById(id);
-        log.info("Товар с ID {} - удалён", id);
-    }
-
-    @Override
     public List<ProductDto> getAllProducts() {
         log.info("Получение всех товаров");
         List<Product> products = productRepository.findAll();
         log.info("Найдено {} товаров", products.size());
         return products.stream().map(this::convertEntityToDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public ProductDto updateProduct(ProductUpdateDto productUpdateDto) {
+        log.info("Received update request for product ID: {}", productUpdateDto.getId());
+        Product product = productRepository.findById(productUpdateDto.getId())
+                .orElseThrow(() -> {
+                    log.error("Product with ID {} not found", productUpdateDto.getId());
+                    return new NoSuchElementException("Product not found");
+                });
+        log.debug("Found product: {}", product);
+        product.setName_product(productUpdateDto.getName_product());
+        Company company = companyRepository.findById(productUpdateDto.getCompany_id())
+                .orElseThrow(() -> {
+                    log.error("Company with ID {} not found", productUpdateDto.getCompany_id());
+                    return new NoSuchElementException("Company not found");
+                });
+        product.setCompany(company);
+        log.debug("Updated product entity with new data: name_product={}, company={}",
+                product.getName_product(), product.getCompany());
+        Product savedProduct = productRepository.save(product);
+        log.info("Product with ID {} updated successfully", savedProduct.getId());
+        ProductDto productDto = convertEntityToDto(savedProduct);
+        log.debug("Converted updated entity to DTO: {}", productDto);
+        return productDto;
+    }
+
+    @Override
+    public void deleteProduct(Long id) {
+        log.info("Удаление товара с ID: {}", id);
+        productRepository.deleteById(id);
+        log.info("Товар с ID {} - удалён", id);
     }
 
     private ProductDto convertEntityToDto(Product product) {
