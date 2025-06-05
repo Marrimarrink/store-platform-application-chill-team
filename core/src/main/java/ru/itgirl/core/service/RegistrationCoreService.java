@@ -1,10 +1,9 @@
 package ru.itgirl.core.service;
 
 import org.springframework.http.ResponseEntity;
-import ru.itgirl.core.dto.RegistrationRequest;
-
-import java.util.UUID;
+import ru.itgirl.core.dto.RegistrationRequestCore;
+import ru.itgirl.core.dto.RegistrationResponse;
 
 public interface RegistrationCoreService {
-    ResponseEntity<String> register(RegistrationRequest request);
+    ResponseEntity<RegistrationResponse> register(RegistrationRequestCore request);
 }
