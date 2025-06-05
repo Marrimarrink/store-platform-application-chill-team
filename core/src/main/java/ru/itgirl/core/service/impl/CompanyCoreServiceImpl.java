@@ -5,14 +5,26 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.itgirl.core.dto.CompanyDto;
 import ru.itgirl.core.entity.Company;
+import ru.itgirl.core.entity.Product;
 import ru.itgirl.core.repository.CompanyRepository;
 import ru.itgirl.core.service.CompanyCoreService;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class CompanyCoreServiceImpl implements CompanyCoreService {
     private final CompanyRepository companyRepository;
+
+    @Override
+    public List<CompanyDto> getAllCompanies() {
+        log.info("Получение всех товаров");
+        List<Company> allCompanies = companyRepository.findAll();
+        log.info("Найдено {} товаров", allCompanies.size());
+        return allCompanies.stream().map(this::convertEntityToDto).collect(Collectors.toList());
+    }
 
     private CompanyDto convertEntityToDto(Company company) { //stream не используем,тк в полях класса Company нет коллекции
         return CompanyDto.builder()
@@ -25,4 +37,5 @@ public class CompanyCoreServiceImpl implements CompanyCoreService {
                 .name_company(companyDto.getName_company())
                 .build();
     }
+
 }
