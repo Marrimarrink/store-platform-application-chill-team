@@ -1,15 +1,14 @@
 package ru.itgirl.core.dto;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Builder
+@Getter
+@Setter
 public class UserDto {
     private Long id;
     private String email;
