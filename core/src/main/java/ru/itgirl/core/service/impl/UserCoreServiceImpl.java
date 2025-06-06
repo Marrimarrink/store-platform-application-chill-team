@@ -33,14 +33,14 @@ public class UserCoreServiceImpl implements UserCoreService {
             throw new NoSuchElementException("No value present");
         }
     }
-  
-  @Override
-      public List<UserDto> getAllUsers() {
+
+    @Override
+    public List<UserDto> getAllUsers() {
         log.info("Try to find users");
         List<User> users = userRepository.findAll();
         if (!users.isEmpty()) {
             log.info("Count found users: {}", users.size());
-            return  userRepository.findAll()
+            return userRepository.findAll()
                     .stream()
                     .map(this::convertEntityToDto)
                     .toList();
@@ -65,6 +65,7 @@ public class UserCoreServiceImpl implements UserCoreService {
             return userDto;
         } else {
             log.error("Role not changed for User with id {} ", id);
+            throw new NoSuchElementException("No value present");
         }
     }
 
