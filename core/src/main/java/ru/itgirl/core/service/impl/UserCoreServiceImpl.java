@@ -8,8 +8,11 @@ import ru.itgirl.core.entity.User;
 import ru.itgirl.core.repository.UserRepository;
 import ru.itgirl.core.service.UserCoreService;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+
+
 
 @Service
 @RequiredArgsConstructor
@@ -30,6 +33,22 @@ public class UserCoreServiceImpl implements UserCoreService {
             throw new NoSuchElementException("No value present");
         }
     }
+  
+  @Override
+      public List<UserDto> getAllUsers() {
+        log.info("Try to find users");
+        List<User> users = userRepository.findAll();
+        if (!users.isEmpty()) {
+            log.info("Count found users: {}", users.size());
+            return  userRepository.findAll()
+                    .stream()
+                    .map(this::convertEntityToDto)
+                    .toList();
+        } else {
+            log.error("Users not found");
+            throw new NoSuchElementException("No value present");
+        }
+    }
 
     @Override
     public UserDto changeUserRole(Long id) {
@@ -46,7 +65,6 @@ public class UserCoreServiceImpl implements UserCoreService {
             return userDto;
         } else {
             log.error("Role not changed for User with id {} ", id);
-            throw new NoSuchElementException("No value present");
         }
     }
 

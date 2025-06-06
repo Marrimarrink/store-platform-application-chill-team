@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import ru.itgirl.core.dto.UserDto;
 
+import java.util.List;
+
 @FeignClient(
         name = "UserCore",
         url = "http://localhost:8080"
@@ -15,7 +17,11 @@ public interface UserCoreServiceClient {
     @GetMapping("/api/v1/users/{id}")
     UserDto getUserById(@PathVariable("id") Long id);
 
-    @PostMapping("/api/v1/users/changes/{id}")
+    @GetMapping("/api/v1/users")
+    List<UserDto> getAllUsers();
+  
+      @PostMapping("/api/v1/users/changes/{id}")
     UserDto changeUserRole(@PathVariable("id") Long id);
+
 }
 

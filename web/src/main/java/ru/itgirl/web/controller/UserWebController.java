@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.itgirl.core.dto.UserDto;
 import ru.itgirl.web.feign.UserCoreServiceClient;
+import java.util.List;
+
 @Slf4j
 @Validated
 @RestController
@@ -25,11 +27,16 @@ public class UserWebController {
         return ResponseEntity.ok(user);
     }
 
-    @PostMapping ("/users/changes/{id}")
+    @GetMapping("/users")
+    public ResponseEntity<List<UserDto>> getAllUsers() {
+        List<UserDto> users = userCoreServiceClient.getAllUsers();
+        return ResponseEntity.ok(users);
+    }
+  
+   @PostMapping ("/users/changes/{id}")
     public ResponseEntity<UserDto> changeUserRole(@PathVariable Long id) {
         UserDto user = userCoreServiceClient.changeUserRole(id);
         return ResponseEntity.ok(user);
     }
-
 
 }
