@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.itgirl.core.dto.UserDto;
 import ru.itgirl.web.feign.UserCoreServiceClient;
 
+import java.util.List;
+
 @Validated
 @RestController
 @RequiredArgsConstructor
@@ -20,5 +22,11 @@ public class UserWebController {
     public ResponseEntity<UserDto> getUserById(@PathVariable Long id) {
         UserDto user = userCoreServiceClient.getUserById(id);
         return ResponseEntity.ok(user);
+    }
+
+    @GetMapping("/users")
+    public ResponseEntity<List<UserDto>> getAllUsers() {
+        List<UserDto> users = userCoreServiceClient.getAllUsers();
+        return ResponseEntity.ok(users);
     }
 }
