@@ -33,9 +33,9 @@ public class UserCoreServiceImpl implements UserCoreService {
             throw new NoSuchElementException("No value present");
         }
     }
-
-    @Override
-    public List<UserDto> getAllUsers() {
+  
+  @Override
+      public List<UserDto> getAllUsers() {
         log.info("Try to find users");
         List<User> users = userRepository.findAll();
         if (!users.isEmpty()) {
@@ -50,6 +50,23 @@ public class UserCoreServiceImpl implements UserCoreService {
         }
     }
 
+    @Override
+    public UserDto changeUserRole(Long id) {
+        log.info("Try to change user role");
+
+        Optional<User> userOptional = userRepository.findById(id);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            user.setRole("ROLE_MANAGER");
+            User changedUser = userRepository.save(user);
+            UserDto userDto = convertEntityToDto(changedUser);
+
+            log.info("Changed role for user {}", userDto.toString());
+            return userDto;
+        } else {
+            log.error("Role not changed for User with id {} ", id);
+        }
+    }
 
     private UserDto convertEntityToDto(User user) {
         return UserDto.builder()

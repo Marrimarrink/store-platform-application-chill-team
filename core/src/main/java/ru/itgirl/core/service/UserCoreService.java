@@ -9,4 +9,7 @@ public interface UserCoreService {
     UserDto getUserById(Long id);
 
     List<UserDto> getAllUsers();
+  
+   UserDto changeUserRole(Long id);
+
 }

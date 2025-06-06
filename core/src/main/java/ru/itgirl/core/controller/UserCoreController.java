@@ -1,6 +1,8 @@
 package ru.itgirl.core.controller;
 
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,9 +24,13 @@ public class UserCoreController {
         return userCoreService.getUserById(id);
     }
 
-    @GetMapping("/v1/users")
+     @GetMapping("/v1/users")
    List<UserDto> getAllUsers() {
         return userCoreService.getAllUsers();
     }
 
+    @PostMapping("/v1/users/changes/{id}")
+    UserDto changeUserRole(@PathVariable("id") Long id) {
+        return userCoreService.changeUserRole(id);
+    }
 }
