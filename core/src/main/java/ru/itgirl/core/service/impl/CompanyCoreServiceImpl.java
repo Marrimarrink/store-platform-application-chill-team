@@ -9,14 +9,32 @@ import ru.itgirl.core.entity.Company;
 import ru.itgirl.core.repository.CompanyRepository;
 import ru.itgirl.core.service.CompanyCoreService;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class CompanyCoreServiceImpl implements CompanyCoreService {
     private final CompanyRepository companyRepository;
+
+    @Override
+    public CompanyDto getCompanyById(Long id) {
+        log.info("Получение компании по ID: {}", id);
+        Company company = companyRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Компании с ID " + id + " не найдены"));
+        return convertEntityToDto(company);
+    }
+
+    @Override
+    public List<CompanyDto> getAllCompanies() {
+        log.info("Получение всех товаров");
+        List<Company> allCompanies = companyRepository.findAll();
+        log.info("Найдено {} товаров", allCompanies.size());
+        return allCompanies.stream().map(this::convertEntityToDto).collect(Collectors.toList());
+    }
 
     @Override
     public void deleteCompany(Long id) {
@@ -52,4 +70,5 @@ public class CompanyCoreServiceImpl implements CompanyCoreService {
                 .name_company(companyCreateDto.getName_company())
                 .build();
     }
+
 }
