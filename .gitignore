@@ -18,3 +18,5 @@ Thumbs.db
 # Игнорировать файлы конфигурации
 application.properties
 application.yml
+
+

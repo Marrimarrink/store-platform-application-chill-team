@@ -19,17 +19,17 @@
             Create table if not exists companies (
             id serial PRIMARY KEY,
             name_company varchar(50) NOT NULL
-            );
+                );
 
             Create table if not exists products (
             id bigserial NOT NULL,
             name_product varchar(50) NOT NULL,
             company_id bigint NOT NULL,
             FOREIGN KEY (company_id) REFERENCES companies (id)
-            );
+                );
 
-            Insert into users(email, password, role, enable) values
-            ('admin@whateverstore.com', 'admin12345', 'ADMIN', 'TRUE')
+            Insert into users(email, password, role) values
+            ('admin@whateverstore.com', 'admin12345', 'ADMIN')
             ;
 
             Insert into companies(name_company) values
@@ -42,4 +42,4 @@
 
         </sql>
     </changeSet>
-    </databaseChangeLog>
+</databaseChangeLog>
