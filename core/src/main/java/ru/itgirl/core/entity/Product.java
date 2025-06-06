@@ -3,28 +3,20 @@ package ru.itgirl.core.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Set;
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Builder
 @Entity
+@Table(name = "products")
 public class Product {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(nullable = false)
-    private String name;
-
-    @ManyToMany
-    @JoinTable(
-            name = "name_company",
-            inverseJoinColumns = @JoinColumn(name = "company_id", referencedColumnName = "id"),
-            joinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id")
-    )
-    private Set<Company> companies;
+    @Column(name = "name_product", length = 50, nullable = false)
+    private String name_product;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "company_id")
+    private Company company;
 }

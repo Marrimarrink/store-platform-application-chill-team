@@ -8,17 +8,15 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-import java.util.Set;
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Builder
-public class ProductCreateDto {
+public class ProductUpdateDto {
+    private Long id;
     @Size(min = 2, max = 50)
-    @NotBlank(message = "Необходимо указать наименование товара")
+    @NotBlank(message = "You must specify the name of the product")
     private String name_product;
-    @NotEmpty(message = "Необходимо указать хотя бы одну компанию")
+    @NotEmpty(message = "You must specify the company")
     private Long company_id;
 }
