@@ -11,7 +11,7 @@ import java.util.List;
 
 @FeignClient(
         name = "ProductCore",
-        url = "http://localhost:8082"
+        url = "http://localhost:8080"
 )
 public interface ProductCoreServiceClient {
     @PostMapping("/api/v1/products")
