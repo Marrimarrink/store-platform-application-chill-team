@@ -33,4 +33,9 @@ public class UserCoreController {
     UserDto changeUserRole(@PathVariable("id") Long id) {
         return userCoreService.changeUserRole(id);
     }
+
+    @DeleteMapping("v1/users/{id}")
+    void deleteUser(@PathVariable("id") Long id) {
+        userCoreService.deleteUser(id);
+    }
 }

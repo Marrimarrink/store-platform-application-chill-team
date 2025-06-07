@@ -81,6 +81,13 @@ public class UserCoreServiceImpl implements UserCoreService {
         }
     }
 
+    @Override
+    public void deleteUser(Long id) {
+        log.info("User with ID {} deletion initiated", id);
+        userRepository.deleteById(id);
+        log.info("User with ID {} deleted", id);
+    }
+
     private UserDto convertEntityToDto(User user) {
         return UserDto.builder()
                 .id(user.getId())
