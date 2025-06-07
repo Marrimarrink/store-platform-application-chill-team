@@ -3,6 +3,7 @@ package ru.itgirl.web.controller;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,14 +24,16 @@ public class RegistrationWebController {
     @PostMapping("/register")
     public ResponseEntity<?> register(@Valid @RequestBody RegistrationRequest request) {
         if (!request.getPassword().equals(request.getConfirmPassword())) {
-            return ResponseEntity.badRequest().body("Пароли не совпадают");
+            return ResponseEntity.badRequest()
+                    .body(new RegistrationResponse("error","passwords do not match, try again"));
         }
         RegistrationRequestCore coreRequest = convertToCore(request);
         RegistrationResponse response = userCoreServiceClientClient.registerUser(coreRequest);
         if ("error".equals(response.getStatus())) {
-            return ResponseEntity.badRequest().body(response.getMessage());
+            return ResponseEntity.badRequest()
+                    .body(new RegistrationResponse(response.getStatus(), response.getMessage()));
         } else {
-            return ResponseEntity.ok(response.getMessage());
+            return ResponseEntity.status(HttpStatus.CREATED).body(response);
         }
     }
 

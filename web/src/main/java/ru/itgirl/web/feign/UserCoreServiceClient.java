@@ -16,7 +16,7 @@ import java.util.List;
 
 @FeignClient(
         name = "UserCore",
-        url = "http://localhost:8080"
+        url = "http://localhost:8081"
 )
 
 public interface UserCoreServiceClient {

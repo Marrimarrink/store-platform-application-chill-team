@@ -1,6 +1,7 @@
 package ru.itgirl.core.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -25,20 +26,32 @@ public class RegistrationCoreServiceImpl implements RegistrationCoreService {
     public ResponseEntity<RegistrationResponse> register(RegistrationRequestCore request) {
         if (userRepository.findByEmail(request.getEmail()).isPresent()) {
             return ResponseEntity.badRequest()
-                    .body(new RegistrationResponse
-                            ("error", "Пользователь с таким email уже зарегистрирован"));
+                    .body(new RegistrationResponse("error",
+                            "User with this email is already registered"));
         }
         String passwordHash = new BCryptPasswordEncoder().encode(request.getPassword());
         User user = new User();
         user.setEmail(request.getEmail());
         user.setPassword(passwordHash);
         user.setEnabled(false);
+        user.setRole("ROLE_USER");
+        user.setPhone(request.getPhone());
         userRepository.save(user);
+        User savedUser = userRepository.findByEmail(request.getEmail()).orElseThrow();
+        RegistrationResponse successResponse = new RegistrationResponse(
+                savedUser.getId(),
+                savedUser.getPhone(),
+                savedUser.getEmail(),
+                savedUser.getRole(),
+                false,
+                "successful",
+                "User registered, activate email"
+        );
         String uuid = UUID.randomUUID().toString();
         String activationLink = "http://localhost:8081/auth/activate?uuid=" + uuid;
         activationLinks.put(uuid, request.getEmail());
         emailCoreService.sendActivationEmail(request.getEmail(), activationLink);
-        return ResponseEntity.ok(new RegistrationResponse
-                ("success", "Регистрация успешна! Проверьте почту для активации."));
+        return ResponseEntity.status(HttpStatus.CREATED).body(successResponse);
+
     }
 }
