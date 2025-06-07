@@ -27,34 +27,43 @@ public class ProductCoreServiceImpl implements ProductCoreService {
 
     @Override
     public ProductDto addProduct(ProductCreateDto productCreateDto) {
-        log.info("Создание нового товара: {}", productCreateDto);
+        log.info("Creating a new product: {}", productCreateDto);
 
         Company company = companyRepository.findById(productCreateDto.getCompany_id())
-                .orElseThrow(() -> new EntityNotFoundException("Компания не найдена"));
+                .orElseThrow(() -> {
+                    log.error("Company with ID {} not found", productCreateDto.getCompany_id());
+                    return new EntityNotFoundException("Company not found");
+                });
 
         Product product = Product.builder()
                 .name_product(productCreateDto.getName_product())
                 .company(company)
                 .build();
 
+        log.debug("Saving new product entity: {}", product);
         Product saved = productRepository.save(product);
+        log.info("Product created with ID: {}", saved.getId());
 
         return convertEntityToDto(saved);
     }
 
     @Override
     public ProductDto getProductById(Long id) {
-        log.info("Получение товара по ID: {}", id);
+        log.info("Fetching product by ID: {}", id);
         Product product = productRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Товар с ID " + id + " не найден"));
+                .orElseThrow(() -> {
+                    log.error("Product with ID {} not found", id);
+                    return new RuntimeException("Product with ID " + id + " not found");
+                });
+        log.debug("Product found: {}", product);
         return convertEntityToDto(product);
     }
 
     @Override
     public List<ProductDto> getAllProducts() {
-        log.info("Получение всех товаров");
+        log.info("Fetching all products");
         List<Product> products = productRepository.findAll();
-        log.info("Найдено {} товаров", products.size());
+        log.info("Found {} products", products.size());
         return products.stream().map(this::convertEntityToDto).collect(Collectors.toList());
     }
 
@@ -85,14 +94,20 @@ public class ProductCoreServiceImpl implements ProductCoreService {
 
     @Override
     public void deleteProduct(Long id) {
-        log.info("Удаление товара с ID: {}", id);
+        log.info("Product with ID {} deletion initiated", id);
+        if (!productRepository.existsById(id)) {
+            log.warn("Product with ID {} does not exist", id);
+            throw new NoSuchElementException("Product with ID " + id + " not found");
+        }
         productRepository.deleteById(id);
-        log.info("Товар с ID {} - удалён", id);
+        log.info("Product with ID {} has been deleted", id);
     }
 
     private ProductDto convertEntityToDto(Product product) {
-        if (product == null) return null;
-
+        if (product == null) {
+            log.warn("Attempted to convert null product entity to DTO");
+            return null;
+        }
         return ProductDto.builder()
                 .id(product.getId())
                 .name_product(product.getName_product())
@@ -105,11 +120,15 @@ public class ProductCoreServiceImpl implements ProductCoreService {
 
     private Product convertDtoToEntity(ProductCreateDto productCreateDto) {
         if (productCreateDto.getCompany_id() == null) {
-            throw new IllegalArgumentException("Необходимо указать ID компании");
+            log.error("Company ID is required for product creation");
+            throw new IllegalArgumentException("Company ID must be provided");
         }
 
         Company company = companyRepository.findById(productCreateDto.getCompany_id())
-                .orElseThrow(() -> new EntityNotFoundException("Компания с ID " + productCreateDto.getCompany_id() + " не найдена"));
+                .orElseThrow(() -> {
+                    log.error("Company with ID {} not found during product creation", productCreateDto.getCompany_id());
+                    return new EntityNotFoundException("Company with ID " + productCreateDto.getCompany_id() + " not found");
+                });
 
         return Product.builder()
                 .name_product(productCreateDto.getName_product())
@@ -117,4 +136,3 @@ public class ProductCoreServiceImpl implements ProductCoreService {
                 .build();
     }
 }
-
