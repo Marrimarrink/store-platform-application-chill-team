@@ -15,4 +15,6 @@ public interface UserCoreService {
   
    User authenticate(String email, String rawPassword);
 
+    void deleteUser(Long id);
+
 }

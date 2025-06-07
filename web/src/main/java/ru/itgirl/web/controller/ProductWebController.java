@@ -9,7 +9,9 @@ import ru.itgirl.core.dto.ProductDto;
 import ru.itgirl.core.dto.ProductUpdateDto;
 import ru.itgirl.web.feign.ProductCoreServiceClient;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Validated
 @RestController
@@ -42,8 +44,10 @@ public class ProductWebController {
     }
 
     @DeleteMapping("/products/{id}")
-    public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
+    public ResponseEntity<Map<String, String>> deleteProduct(@PathVariable Long id) {
         productCoreServiceClient.deleteProduct(id);
-        return ResponseEntity.noContent().build();
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Deleted successfully");
+        return ResponseEntity.ok(response);
     }
 }

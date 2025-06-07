@@ -2,13 +2,19 @@ package ru.itgirl.web.feign;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
+import ru.itgirl.core.dto.RegistrationRequestCore;
+import ru.itgirl.core.dto.RegistrationResponse;
+import ru.itgirl.core.dto.AuthRequest;
+import ru.itgirl.core.dto.AuthResponse;
+import ru.itgirl.core.dto.UserDto;
+import ru.itgirl.web.dto.RegistrationRequest;
 import ru.itgirl.core.dto.*;
 
 import java.util.List;
 
 @FeignClient(
         name = "UserCore",
-        url = "http://localhost:8081"
+        url = "http://localhost:8080"
 )
 
 public interface UserCoreServiceClient {
@@ -32,5 +38,7 @@ public interface UserCoreServiceClient {
     @PostMapping("/auth/login")
     AuthResponse login(@RequestBody AuthRequest authRequest);
 
+    @DeleteMapping("/api/v1/users/{id}")
+    void deleteUser(@PathVariable("id") Long id);
 }
 
