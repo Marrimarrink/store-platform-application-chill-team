@@ -24,7 +24,7 @@ public class EmailCoreServiceImpl implements EmailCoreService {
             message.setText("Для активации вашего аккаунта перейдите по ссылке: " + activationLink);
             mailSender.send(message);
         } catch (MailSendException e) {
-            log.error("Ошибка при отправке письма: ", e);
+            log.error("Error sending email: ", e);
         }
     }
 }
