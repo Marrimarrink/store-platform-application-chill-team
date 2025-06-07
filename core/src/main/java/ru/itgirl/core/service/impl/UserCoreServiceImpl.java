@@ -84,8 +84,12 @@ public class UserCoreServiceImpl implements UserCoreService {
     @Override
     public void deleteUser(Long id) {
         log.info("User with ID {} deletion initiated", id);
+        if (!userRepository.existsById(id)) {
+            log.warn("User with ID {} does not exist", id);
+            throw new NoSuchElementException("User with ID " + id + " not found");
+        }
         userRepository.deleteById(id);
-        log.info("User with ID {} deleted", id);
+        log.info("User with ID {} has been deleted", id);
     }
 
     private UserDto convertEntityToDto(User user) {
