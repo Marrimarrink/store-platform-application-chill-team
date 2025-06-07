@@ -11,7 +11,7 @@ import java.util.List;
 
 @FeignClient(
         name = "ProductCore",
-        url = "http://localhost:8080"
+        url = "http://localhost:8082"
 )
 public interface ProductCoreServiceClient {
     @PostMapping("/api/v1/products")
@@ -23,8 +23,8 @@ public interface ProductCoreServiceClient {
     @GetMapping("/api/v1/products")
     List<ProductDto> getAllProducts();
 
-    @PutMapping("/api/v1/products/{id}")
-    ProductDto updateProduct(@PathVariable("id") Long id, @RequestBody @Valid ProductUpdateDto productUpdateDto);
+    @PutMapping("/api/v1/products")
+    ProductDto updateProduct(@RequestBody @Valid ProductUpdateDto productUpdateDto);
 
     @DeleteMapping("/api/v1/products/{id}")
     void deleteProduct(@PathVariable("id") Long id);
