@@ -17,6 +17,8 @@ public class SecurityConfig {
                     .csrf(csrf -> csrf.disable())  // Отключаем CSRF
                     .authorizeHttpRequests(auth -> auth
                             .requestMatchers("/auth/register").permitAll()
+                            .requestMatchers("/auth/activate").permitAll()
+                            .requestMatchers("/api/auth/activate").permitAll()
                             .anyRequest().permitAll()); // Разрешаем доступ всем
          // .requestMatchers("/auth/login").permitAll() // это обязательно надо сделать будет для АУТЕНТИФИКАЦИИ, когда всё остальное поставим по ролям
           //        .anyRequest().authenticated() // остальные запросы требуют аутентификации (можно будет потом добавить)
