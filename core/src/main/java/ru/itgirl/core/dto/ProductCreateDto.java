@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class ProductCreateDto {
     @Size(min = 2, max = 50)
-    @NotBlank(message = "Необходимо указать наименование товара")
+    @NotBlank(message = "You must specify the name of the product")
     private String name_product;
     @Min(value = 1, message = "You must specify the company")
     private Long company_id;
