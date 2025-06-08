@@ -26,11 +26,26 @@ public class SecurityConfig {
                         .requestMatchers("/auth/activate").permitAll()
                         .requestMatchers("/api/auth/activate").permitAll()
                         .requestMatchers("/auth/login").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/companies").hasAnyRole("ADMIN", "MANAGER")
-                        .requestMatchers(HttpMethod.DELETE, "/companies/{id}").hasRole("ADMIN")
+                        .requestMatchers("/auth/logout").permitAll()
+
+                        .requestMatchers(HttpMethod.GET, "/users").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/users/{id}").hasRole("ADMIN")
-                        .anyRequest().permitAll()) // Пока разрешаем доступ всем
-                        //.anyRequest().authenticated() // остальные запросы требуют аутентификации (можно надо добавить)
+                        .requestMatchers(HttpMethod.POST, "/users/changes/{id}").hasAnyRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/users/{id}").hasRole("ADMIN")
+
+                        .requestMatchers(HttpMethod.POST, "/companies").hasAnyRole("ADMIN", "MANAGER")
+                        .requestMatchers(HttpMethod.GET, "/companies").hasAnyRole("ADMIN", "MANAGER")
+                        .requestMatchers(HttpMethod.GET, "/companies/{id}").hasAnyRole("ADMIN", "MANAGER")
+                        .requestMatchers(HttpMethod.PUT, "/companies/{id}").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/companies/{id}").hasRole("ADMIN")
+
+                        .requestMatchers(HttpMethod.POST, "/products").hasAnyRole("ADMIN", "MANAGER")
+                        .requestMatchers(HttpMethod.GET, "/products").hasAnyRole("ADMIN", "MANAGER", "USER")
+                        .requestMatchers(HttpMethod.GET, "/products/{id}").hasAnyRole("ADMIN", "MANAGER", "USER")
+                        .requestMatchers(HttpMethod.PUT, "/products/{id}").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/products/{id}").hasRole("ADMIN")
+
+                        .anyRequest().authenticated())
 
                 .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 
