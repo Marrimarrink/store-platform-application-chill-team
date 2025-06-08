@@ -2,13 +2,16 @@ package ru.itgirl.core.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.itgirl.core.dto.ProductCreateDto;
 import ru.itgirl.core.dto.ProductDto;
 import ru.itgirl.core.dto.ProductUpdateDto;
 import ru.itgirl.core.service.ProductCoreService;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
@@ -31,9 +34,15 @@ public class ProductCoreController {
         return productCoreService.getAllProducts();
     }
 
-    @PutMapping("/v1/products/{id}")
-    public ProductDto updateProduct(@RequestBody @Valid ProductUpdateDto productUpdateDto) {
-        return productCoreService.updateProduct(productUpdateDto);
+    @PutMapping("/v1/products")
+    public ResponseEntity<Map<String, Object>> updateProduct(@RequestBody @Valid ProductUpdateDto productUpdateDto) {
+        ProductDto updatedProduct = productCoreService.updateProduct(productUpdateDto);
+        Map<String, Object> response = new HashMap<>();
+        response.put("id", updatedProduct.getId());
+        response.put("name_product", updatedProduct.getName_product());
+        response.put("message", "Product card updated successfully");
+
+        return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/v1/products/{id}")

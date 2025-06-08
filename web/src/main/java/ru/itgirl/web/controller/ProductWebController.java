@@ -37,10 +37,14 @@ public class ProductWebController {
         return ResponseEntity.ok(allProducts);
     }
 
-    @PutMapping("/products/{id}")
-    public ResponseEntity<ProductDto> updateProduct(@PathVariable Long id, @RequestBody ProductUpdateDto productUpdateDto) {
-        ProductDto updatedProduct = productCoreServiceClient.updateProduct(id, productUpdateDto);
-        return ResponseEntity.ok(updatedProduct);
+    @PutMapping("/products")
+    public ResponseEntity<Map<String, Object>> updateProduct(@RequestBody ProductUpdateDto productUpdateDto) {
+        ProductDto updatedProduct = productCoreServiceClient.updateProduct(productUpdateDto);
+        Map<String, Object> response = new HashMap<>();
+        response.put("id", updatedProduct.getId());
+        response.put("name_product", updatedProduct.getName_product());
+        response.put("message", "Product card updated successfully");
+        return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/products/{id}")
