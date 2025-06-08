@@ -10,7 +10,7 @@ import ru.itgirl.core.dto.CompanyDto;
 
 @FeignClient(
         name = "CompanyCore",
-        url = "http://localhost:8081"
+        url = "http://localhost:8080"
 )
 public interface CompanyCoreServiceClient {
     @DeleteMapping("/api/v1/companies/{id}")

@@ -4,10 +4,9 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 import ru.itgirl.core.dto.RegistrationRequestCore;
 import ru.itgirl.core.dto.RegistrationResponse;
-import ru.itgirl.core.dto.AuthRequest;
-import ru.itgirl.core.dto.AuthResponse;
+import ru.itgirl.core.dto.AuthenticationRequest;
+import ru.itgirl.core.dto.AuthenticationResponse;
 import ru.itgirl.core.dto.UserDto;
-import ru.itgirl.web.dto.RegistrationRequest;
 import ru.itgirl.core.dto.*;
 
 import java.util.List;
@@ -34,11 +33,9 @@ public interface UserCoreServiceClient {
     @GetMapping("/api/auth/activate")
     ActivationResponse activate(@RequestParam("uuid") String uuid);
 
-
-    @PostMapping("/auth/login")
-    AuthResponse login(@RequestBody AuthRequest authRequest);
+    @PostMapping("/api/v1/auth/login")
+    AuthenticationResponse login(@RequestBody AuthenticationRequest authRequest);
 
     @DeleteMapping("/api/v1/users/{id}")
     void deleteUser(@PathVariable("id") Long id);
 }
-
