@@ -6,8 +6,12 @@ import org.springframework.stereotype.Service;
 import ru.itgirl.core.dto.CompanyCreateDto;
 import ru.itgirl.core.dto.CompanyDto;
 import ru.itgirl.core.entity.Company;
+import ru.itgirl.core.entity.Product;
 import ru.itgirl.core.repository.CompanyRepository;
 import ru.itgirl.core.service.CompanyCoreService;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -17,6 +21,14 @@ import java.util.Optional;
 @Slf4j
 public class CompanyCoreServiceImpl implements CompanyCoreService {
     private final CompanyRepository companyRepository;
+
+    @Override
+    public List<CompanyDto> getAllCompanies() {
+        log.info("Получение всех товаров");
+        List<Company> allCompanies = companyRepository.findAll();
+        log.info("Найдено {} товаров", allCompanies.size());
+        return allCompanies.stream().map(this::convertEntityToDto).collect(Collectors.toList());
+    }
 
     @Override
     public void deleteCompany(Long id) {
@@ -52,4 +64,5 @@ public class CompanyCoreServiceImpl implements CompanyCoreService {
                 .name_company(companyCreateDto.getName_company())
                 .build();
     }
+
 }

@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import ru.itgirl.core.dto.CompanyCreateDto;
 import ru.itgirl.core.dto.CompanyDto;
+import org.springframework.web.bind.annotation.GetMapping;
 import ru.itgirl.core.service.CompanyCoreService;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -24,10 +26,15 @@ public class CompanyCoreController {
     CompanyDto addCompany(@RequestBody @Valid CompanyCreateDto companyCreateDto) {
         return companyCoreService.addCompany(companyCreateDto);
     }
-  
+
       @DeleteMapping("/v1/companies/{id}")
     void deleteCompany(@PathVariable("id") Long id) {
         companyCoreService.deleteCompany(id);
     }
+    @GetMapping("/companies")
+    public List<CompanyDto> getAllCompanies() {
+        return companyCoreService.getAllCompanies();
+    }
+
 }
 
