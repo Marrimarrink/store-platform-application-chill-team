@@ -8,36 +8,36 @@
     <changeSet id="init db" author="author name">
         <sql>
             Create table if not exists users (
-                                                 id serial NOT NULL,
-                                                 email varchar(255) NOT NULL,
-                password varchar(255) NOT NULL,
-                role varchar(50) NOT NULL,
-                phone varchar(15),
-                enable boolean DEFAULT FALSE NOT NULL
+            id serial NOT NULL,
+            email varchar(255) NOT NULL,
+            password varchar(255) NOT NULL,
+            role varchar(50) NOT NULL,
+            phone varchar(15),
+            enable boolean DEFAULT FALSE NOT NULL
                 );
 
             Create table if not exists companies (
-                                                     id serial PRIMARY KEY,
-                                                     name_company varchar(50) NOT NULL
+            id serial PRIMARY KEY,
+            name_company varchar(50) NOT NULL
                 );
 
             Create table if not exists products (
-                                                    id bigserial NOT NULL,
-                                                    name_product varchar(50) NOT NULL,
-                company_id bigint NOT NULL,
-                FOREIGN KEY (company_id) REFERENCES companies (id)
+            id bigserial NOT NULL,
+            name_product varchar(50) NOT NULL,
+            company_id bigint NOT NULL,
+            FOREIGN KEY (company_id) REFERENCES companies (id)
                 );
 
             Insert into users(email, password, role, enable) values
-                ('admin@whateverstore.com', 'admin12345', 'ADMIN', TRUE)
+            ('admin@whateverstore.com', 'admin12345', 'ADMIN', TRUE)
             ;
 
             Insert into companies(name_company) values
-                ('Ивановский трикотаж')
+            ('Ивановский трикотаж')
             ;
 
             Insert into products(name_product, company_id) values
-                ('Футболка', 1)
+            ('Футболка', 1)
             ;
 
         </sql>
