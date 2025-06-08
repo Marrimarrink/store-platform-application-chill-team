@@ -6,7 +6,7 @@ import ru.itgirl.core.entity.Product;
 import java.util.Optional;
 
 public interface ProductRepository extends JpaRepository<Product, Long>, JpaSpecificationExecutor<Product> {
-    Optional<Product> findProductByName(String name);
+    //Optional<Product> findByName_product(String name_product);
 
 }
 

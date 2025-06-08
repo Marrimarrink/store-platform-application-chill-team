@@ -16,6 +16,7 @@ import ru.itgirl.core.dto.CompanyCreateDto;
 import ru.itgirl.core.service.CompanyCoreService;
 
 import java.util.List;
+
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
@@ -41,4 +42,5 @@ public class CompanyCoreController {
         companyCoreService.deleteCompany(id);
     }
 }
+
 
