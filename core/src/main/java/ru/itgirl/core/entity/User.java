@@ -30,4 +30,8 @@ public class User {
 
     @Column(name = "enable", nullable = false)
     private boolean isEnabled = false;
+
+    public boolean isEnabled() {
+        return isEnabled;
+    }
 }

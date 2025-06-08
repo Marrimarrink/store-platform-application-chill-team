@@ -12,8 +12,6 @@ public interface UserCoreService {
     List<UserDto> getAllUsers();
   
    UserDto changeUserRole(Long id);
-  
-   User authenticate(String email, String rawPassword);
 
     void deleteUser(Long id);
 
