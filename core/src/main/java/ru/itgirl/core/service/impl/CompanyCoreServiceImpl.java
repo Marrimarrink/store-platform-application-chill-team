@@ -33,7 +33,9 @@ public class CompanyCoreServiceImpl implements CompanyCoreService {
         log.info("Получение всех товаров");
         List<Company> allCompanies = companyRepository.findAll();
         log.info("Найдено {} товаров", allCompanies.size());
-        return allCompanies.stream().map(this::convertEntityToDto).collect(Collectors.toList());
+        return allCompanies.stream()
+                .map(this::convertEntityToDto)
+                .collect(Collectors.toList());
     }
 
     @Override
