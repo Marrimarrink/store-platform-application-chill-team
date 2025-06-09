@@ -1,5 +1,6 @@
 package ru.itgirl.web.controller;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -16,6 +17,7 @@ import java.util.Map;
 @Validated
 @RestController
 @RequiredArgsConstructor
+@SecurityRequirement(name = "library-users")
 public class ProductWebController {
     private final ProductCoreServiceClient productCoreServiceClient;
 

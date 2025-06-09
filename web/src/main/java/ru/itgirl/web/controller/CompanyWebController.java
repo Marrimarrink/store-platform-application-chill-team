@@ -1,5 +1,6 @@
 package ru.itgirl.web.controller;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.validation.annotation.Validated;
@@ -17,6 +18,7 @@ import ru.itgirl.web.feign.CompanyCoreServiceClient;
 @Validated
 @RestController
 @RequiredArgsConstructor
+@SecurityRequirement(name = "library-users")
 public class CompanyWebController {
     private final CompanyCoreServiceClient companyCoreServiceClient;
 

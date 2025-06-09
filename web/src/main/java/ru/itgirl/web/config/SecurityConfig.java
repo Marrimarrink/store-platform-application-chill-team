@@ -17,11 +17,19 @@ public class SecurityConfig {
 
     private final JwtRequestFilter jwtRequestFilter;
 
+    private static final String[] SWAGGER_PATHS = {
+            "/swagger-ui.html",
+            "/swagger-ui/**",
+            "/v3/api-docs/**",
+            "/swagger-resources/**",
+            "/webjars/**"
+    };
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf.disable())  // Отключаем CSRF
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(SWAGGER_PATHS).permitAll()
                         .requestMatchers("/auth/register").permitAll()
                         .requestMatchers("/auth/activate").permitAll()
                         .requestMatchers("/api/auth/activate").permitAll()
