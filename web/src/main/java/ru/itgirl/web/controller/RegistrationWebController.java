@@ -1,5 +1,6 @@
 package ru.itgirl.web.controller;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,6 +20,7 @@ import java.util.List;
 @RequestMapping("/auth")
 @RequiredArgsConstructor
 @Slf4j
+@SecurityRequirement(name = "library-users")
 public class RegistrationWebController {
     private final UserCoreServiceClient userCoreServiceClientClient;
 

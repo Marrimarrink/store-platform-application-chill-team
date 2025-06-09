@@ -2,6 +2,7 @@ package ru.itgirl.web.controller;
 
 import feign.FeignException;
 import io.jsonwebtoken.Claims;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,7 @@ import ru.itgirl.web.util.TokenBlacklist;
 @RequestMapping("/auth")
 @RequiredArgsConstructor
 @Slf4j
+@SecurityRequirement(name = "library-users")
 public class AuthenticationWebController {
     private final UserCoreServiceClient userCoreServiceClient;
     private final JWTUtilVerifier jwtUtilVerifier;
