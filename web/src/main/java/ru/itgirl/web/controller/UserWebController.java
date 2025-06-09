@@ -2,6 +2,7 @@ package ru.itgirl.web.controller;
 
 
 import feign.FeignException;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,7 @@ import java.util.Map;
 @Validated
 @RestController
 @RequiredArgsConstructor
+@SecurityRequirement(name = "library-users")
 public class UserWebController {
     private final UserCoreServiceClient userCoreServiceClient;
 
