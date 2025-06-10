@@ -6,6 +6,16 @@
         https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
 
     <include file="changelog/2025_06_05.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/2025_06_09_users.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/2025_06_09_companies.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/2025_06_09_products_1-3_companies.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/2025_06_09_products_4-6_companies.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/2025_06_09_products_7-14_companies.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/2025_06_09_products_15-21_companies.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/2025_06_09_products_22-26_companies.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/2025_06_09_products_27-29_companies.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/2025_06_09_products_30-31_companies.xml" relativeToChangelogFile="true"/>
+
 
 
 </databaseChangeLog>

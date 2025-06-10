@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+
+    <changeSet id="insert_data_companies" author="dyankovskaya">
+        <sql>
+--вставить в таблицу Companies 30 компании, вместе с Ивановским трикотажем получается 31 Компании всего
+  Insert into companies(name_company) values
+('Lamodniy'),
+('Городской Шик'),
+('Vintage Vibe') ,
+('Современная Муза'),
+('EcoThreads'),
+('Классический Кутюр'),
+('Rebel Wear'),
+('Бохо Блаженство'),
+('Современная Классика'),
+('Спортивный Дух'),
+('Городской сумасшедший'),
+('Смелая Мода'),
+('Ретро Возрождение'),
+('Изысканные Стилевые Решения - ИСР'),
+('Edgy Essentials'),
+('GymMan'),
+('Сказочный Пушистик'),
+('Смелый Деним'),
+('Funky Fashion'),
+('Trendy Threads'),
+('Casual Chic'),
+('Вечные Тренды'),
+('Гармония Форм'),
+('Хозяюшка'),
+('Яркие Видения'),
+('Luxe Layers'),
+('Технорешение'),
+('JungleHome'),
+('Наслелие'),
+('HeartBeat')
+    ;
+        </sql>
+    </changeSet>
+</databaseChangeLog>
